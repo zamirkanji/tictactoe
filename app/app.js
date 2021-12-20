@@ -1,17 +1,20 @@
-
 const gameBoard = (() => {
     const game = [];
 	return { game };
 })();
 
-const gameLogic = (() => {
-    const gameArr = Object.assign({}, gameBoard);
-    return { gameArr }
-})();
-
-const displayController = () => {
+const displayController = (() => {
+    const gameBtns = document.querySelectorAll('.game-btn');
+    gameBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const BTN = e.target;
+            console.log(BTN);
+        })
+    })
     
-}
+    // const gameArr = Object.assign({}, gameBoard);
+    // return { gameArr }
+ })();
 
 const computer = () => {
     const oMarker = () => "o";
@@ -24,17 +27,15 @@ const player = () => {
         return "x"
     };
     const test = () => "hello";
-    const {testProto} = gameLogic;
+    // const {testProto} = gameLogic();
     return { 
         xMarker, 
         test,
-        testProto
     };
 };
 
-const player1 = player();
+const user = player();
 const comp = computer();
-console.log(player1, comp);
 
 //player will have x
 //comp will have o
