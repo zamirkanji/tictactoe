@@ -1,41 +1,43 @@
+const player = () => {
+    const xMarker = () => {
+        console.log('test onclick');
+        return "x";
+    };
+    const oMarker = () => {
+        return "o"
+    };
+    const test = () => "hello";
+    return { xMarker, oMarker ,test };
+};
+
 const gameBoard = (() => {
     const game = [];
 	return { game };
 })();
 
+const user1 = player();
+const user2 = player(); 
+
 const displayController = (() => {
+    const {xMarker, oMarker} = player();
     const gameBtns = document.querySelectorAll('.game-btn');
     gameBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             const BTN = e.target;
-            console.log(BTN);
+            // console.log(BTN);
+            user1.xMarker();
         })
     })
     
-    // const gameArr = Object.assign({}, gameBoard);
-    // return { gameArr }
+    const gameArr = Object.assign({}, gameBoard);
+    // const gameArr = Object.create(gameBoard);
+    // console.log(gameArr);
+    // return {gameArr};
+    console.log(gameArr);
+    return { gameArr }
  })();
 
-const computer = () => {
-    const oMarker = () => "o";
-    return { oMarker };
-};
-
-const player = () => {
-    const xMarker = () => {
-        console.log("test");
-        return "x"
-    };
-    const test = () => "hello";
-    // const {testProto} = gameLogic();
-    return { 
-        xMarker, 
-        test,
-    };
-};
-
-const user = player();
-const comp = computer();
+                                                                                      
 
 //player will have x
 //comp will have o
