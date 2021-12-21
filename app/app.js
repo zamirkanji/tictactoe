@@ -18,7 +18,11 @@ const gameBoard = (() => {
 const user1 = player();
 const user2 = player(); 
 
-const displayController = (() => {
+const createHTML = (player1, player2) => {
+    //if player1 clicks, create "X" element
+    //if player2 clicks, create "O" element 
+    //push each element created to array gameboard object
+    
     const {xMarker, oMarker} = player();
     const gameBtns = document.querySelectorAll('.game-btn');
     gameBtns.forEach(btn => {
@@ -28,6 +32,11 @@ const displayController = (() => {
             user1.xMarker();
         })
     })
+}
+
+const displayController = (() => {
+    createHTML();
+    
     
     const gameArr = Object.assign({}, gameBoard);
     // const gameArr = Object.create(gameBoard);
