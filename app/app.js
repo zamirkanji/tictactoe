@@ -1,14 +1,36 @@
 const player = () => {
     const xMarker = () => {
-        console.log('test onclick');
+        // console.log('test onclick');
         return "x";
     };
     const oMarker = () => {
         return "o"
     };
-    const test = () => "hello";
-    return { xMarker, oMarker ,test };
+//if player1 clicks, create "X" element
+//if player2 clicks, create "O" element 
+//push each element created to array gameboard object
+    const createHTML = (BTN) => {
+        
+        console.log(BTN);
+        const divEl = document.createElement('div');
+        //if player1 clicks
+        divEl.textContent = "X";
+        divEl.classList.add('x-btn');
+        //if player2 clicks
+        // divEl.textContent = "O"; 
+        BTN.appendChild(divEl);
+
+    }
+    return { 
+        xMarker,
+        oMarker,
+        createHTML
+    };
 };
+
+
+
+// player.prototype = Object.create(createHTML.prototype);
 
 const gameBoard = (() => {
     const game = [];
@@ -18,26 +40,19 @@ const gameBoard = (() => {
 const user1 = player();
 const user2 = player(); 
 
-const createHTML = (player1, player2) => {
-    //if player1 clicks, create "X" element
-    //if player2 clicks, create "O" element 
-    //push each element created to array gameboard object
-    
-    const {xMarker, oMarker} = player();
+
+const displayController = (() => {
+    const {xMarker, oMarker, createHTML} = player(); //inheritance from player class
     const gameBtns = document.querySelectorAll('.game-btn');
     gameBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             const BTN = e.target;
             // console.log(BTN);
+            user1.createHTML(BTN);
             user1.xMarker();
         })
     })
-}
-
-const displayController = (() => {
-    createHTML();
-    
-    
+      
     const gameArr = Object.assign({}, gameBoard);
     // const gameArr = Object.create(gameBoard);
     // console.log(gameArr);
