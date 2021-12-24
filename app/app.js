@@ -1,71 +1,130 @@
+let log = console.log;
+
 const player = () => {
+    // const counter = () => {
+    //     let count = 0;
+    //     return () => {
+    //         console.log(count);
+    //         count++;
+    //     }
+    // }
     const xMarker = () => {
-        // console.log('test onclick');
         return "x";
     };
     const oMarker = () => {
         return "o"
     };
-//if player1 clicks, create "X" element
-//if player2 clicks, create "O" element 
-//push each element created to array gameboard object
-    const createHTML = (BTN) => {
-        
-        console.log(BTN);
+    const createXBtn = (BTN) => {
         const divEl = document.createElement('div');
-        //if player1 clicks
         divEl.textContent = "X";
         divEl.classList.add('x-btn');
-        //if player2 clicks
         // divEl.textContent = "O"; 
         BTN.appendChild(divEl);
-
     }
-    return { 
+    const createOBtn = (BTN) => {
+        const divEl = document.createElement('div');
+        divEl.textContent = "O";
+        divEl.classList.add('o-btn');
+        BTN.appendChild(divEl);
+    }
+    return {
+        counter,
         xMarker,
         oMarker,
-        createHTML
+        createXBtn,
+        createOBtn
     };
 };
+// const playerTwo = () => {
+//     const counter = () => {
+//         let count = 0;
+//         return () => {
+//             console.log(count);
+//             count++;
+//         }
+//     }
+//     const oMarker = () => {
+//         return "o"
+//     };
+//     const createOBtn = (BTN) => {
+//         const divEl = document.createElement('div');
+//         divEl.textContent = "O";
+//         divEl.classList.add('o-btn');
+//         BTN.appendChild(divEl);
+//     }
+//     return {
+//         counter,
+//         oMarker,
+//         createOBtn
+//     };
+// };
 
+// console.log(player());
 
-
-// player.prototype = Object.create(createHTML.prototype);
+// player.prototype = Object.create(createXBtn.prototype);
 
 const gameBoard = (() => {
     const game = [];
 	return { game };
 })();
 
-const user1 = player();
-const user2 = player(); 
-
-
 const displayController = (() => {
-    const {xMarker, oMarker, createHTML} = player(); //inheritance from player class
-    const gameBtns = document.querySelectorAll('.game-btn');
-    gameBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const BTN = e.target;
-            // console.log(BTN);
-            user1.createHTML(BTN);
-            user1.xMarker();
-        })
-    })
-      
+
     const gameArr = Object.assign({}, gameBoard);
-    // const gameArr = Object.create(gameBoard);
-    // console.log(gameArr);
-    // return {gameArr};
     console.log(gameArr);
-    return { gameArr }
+    
+    const user1 = player();
+    const user2 = player(); 
+
+    // const playerCounter = user1.counter();
+    // const playerTwoCounter = user2.counter();
+
+    const createX = (BTN) => {
+            user1.createXBtn(BTN);
+            // playerCounter();
+            gameArr.game.push(user1.xMarker());
+    }
+    const createO = (BTN) => {
+            user2.createOBtn(BTN);
+            // playerTwoCounter();
+            gameArr.game.push(user2.oMarker());
+    }
+    
+    // const {xMarker, oMarker, createXBtn} = player(); //inheritance from player class
+
+    const btnListener = () => {
+        const gameBtns = document.querySelectorAll('.game-btn');
+        gameBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const BTN = e.target;
+                if (BTN.classList.contains('x-btn')) {
+                    return;
+                }
+                if (BTN.classList.contains('o-btn')) {
+                    return;
+                }
+                if (gameArr.game.length === 0 || (gameArr.game[gameArr.game.length - 1] === 'o')) {
+                    log('test');
+                    createX(BTN);
+                    // user1.createXBtn(BTN);
+                    // playerCounter();
+                    // gameArr.game.push(user1.xMarker());
+                }
+                if ((gameArr.game[gameArr.game.length - 1] === 'x') || (gameArr.game.length >= 1)) {
+                    createO(BTN);
+                    // user2.createOBtn(BTN);
+                    // playerTwoCounter();
+                }
+            })
+        })
+    }
+
+    return { 
+        gameArr, 
+        createX,
+        btnListener 
+    }
+
  })();
 
-                                                                                      
-
-//player will have x
-//comp will have o
-//each pick will be pushed to gameboard array
-//loop through array to make sure logic is right (and look for 3 in a row -winner)
-//dom elements will be created from an object that is called when palyer has made a selection
-//game board is run once (iife)
+ displayController.btnListener();
