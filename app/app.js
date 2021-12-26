@@ -1,5 +1,15 @@
 let log = console.log;
 
+const gameBoard = (() => {
+    const game = [];
+    const checkForWinner = () => {
+        game.forEach(playerMove => {
+
+        })
+    }
+	return { game, checkForWinner };
+})();
+
 const player = () => {
     const xMarker = () => "x";
     const oMarker = () => "o";
@@ -23,13 +33,7 @@ const player = () => {
     };
 };
 
-const gameBoard = (() => {
-    const game = [];
-	return { game };
-})();
-
-const displayController = (() => {
-
+const displayController = (() => {  
     const gameArr = Object.assign({}, gameBoard);
     console.log(gameArr);
     
@@ -37,12 +41,12 @@ const displayController = (() => {
     const user2 = player(); 
 
     const createX = (BTN) => {
-            user1.createXBtn(BTN);
-            gameArr.game.push(user1.xMarker());
+        user1.createXBtn(BTN);
+        gameArr.game.push(user1.xMarker());
     }
     const createO = (BTN) => {
-            user2.createOBtn(BTN);
-            gameArr.game.push(user2.oMarker());
+        user2.createOBtn(BTN);
+        gameArr.game.push(user2.oMarker());
     }
     const gameLogic = (BTN) => {
         if (BTN.classList.contains('x-btn')) {
@@ -55,29 +59,35 @@ const displayController = (() => {
             createO(BTN);
         }
         if (gameArr.game.length === 0 || (gameArr.game[gameArr.game.length - 1] === 'o')) {
-            log('test');
+            // log('test');
             createX(BTN);
         }
     }
-
-    const btnListener = () => {
-        const gameBtns = document.querySelectorAll('.game-btn');
-        gameBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const BTN = e.target;
-                gameLogic(BTN);
-            })
-        })
-    }
-
+    
+    
     return { 
         gameArr, 
         createX,
         createO,
-        gameLogic,
-        btnListener 
+        gameLogic
+        // btnListener 
     }
+    
+})();
 
- })();
 
- displayController.btnListener();
+
+
+const btnListener = () => {
+    const gameBtns = document.querySelectorAll('.game-btn');
+    gameBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const BTN = e.target;
+            displayController.gameLogic(BTN);
+        })
+    })
+}
+
+btnListener();
+
+// displayController.btnListener();
