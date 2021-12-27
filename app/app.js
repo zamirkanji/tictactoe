@@ -1,17 +1,21 @@
 let log = console.log;
 
-const gameBoard = (() => {
+const gameBoard = ((btnID) => {
+    // { btnid: x, btnid: o}
+    const gb = {}
+    const returnMarker = [];
     const game = [];
-    const checkForWinner = () => {
-        game.forEach(playerMove => {
 
+    const checkForWinner = () => {
+        returnMarker.forEach(mark => {
         })
     }
-	return { game, checkForWinner };
+	return { returnMarker, checkForWinner, game, gb };
 })();
 
 
 const player = () => {
+
     const xMarker = () => "x";
     const oMarker = () => "o";
 
@@ -22,44 +26,48 @@ const player = () => {
 };
 
 const gameLogic = () => {
-    log('test');
+    
     const user1 = player();
     const user2 = player(); 
 
-    const gameArr = Object.assign({}, gameBoard);
+    const gameBoardObject = Object.assign({}, gameBoard);
 
-    const createX = (BTN) => {
+    const createX = (BTN, btnID) => {
         displayController.createXBtn(BTN);
-        gameArr.game.push(user1.xMarker());
-        log(gameArr);
+        gameBoardObject.returnMarker.push(user1.xMarker());
+        gameBoardObject.game.push(btnID);
+        gameBoardObject.gb[btnID] = "x"
     }
 
-    const createO = (BTN) => {
+    const createO = (BTN, btnID) => {
         displayController.createOBtn(BTN);
-        gameArr.game.push(user2.oMarker());
-        log(gameArr);
+        gameBoardObject.returnMarker.push(user2.oMarker());
+        gameBoardObject.game.push(btnID);
+        gameBoardObject.gb[btnID] = "o"
     }
 
-    const switchPlayers = (BTN) => {
+    const switchPlayers = (BTN, btnID) => {
+        if(gameBoardObject.game.includes(btnID)) {
+            return;
+        }
         if (BTN.classList.contains('x-btn')) {
             return;
         }
         if (BTN.classList.contains('o-btn')) {
             return;
         }
-        if ((gameArr.game[gameArr.game.length - 1] === 'x')) {
-            createO(BTN);
+        if ((gameBoardObject.returnMarker[gameBoardObject.returnMarker.length - 1] === 'x')) {
+            createO(BTN, btnID);
             return; //this was it******************
         }
-        if (gameArr.game.length === 0 || (gameArr.game[gameArr.game.length - 1] === 'o')) {
-            // log('test');
-            createX(BTN);
+        if (gameBoardObject.returnMarker.length === 0 || (gameBoardObject.returnMarker[gameBoardObject.returnMarker.length - 1] === 'o')) {
+            createX(BTN,btnID);
             return;
         }
     }
 
     return {
-        gameArr, 
+        gameBoardObject, 
         createX, 
         createO,
         switchPlayers
@@ -83,7 +91,7 @@ const displayController = (() => {
 
     return { 
         createXBtn,
-        createOBtn,
+        createOBtn
     }    
 })();
 
@@ -96,7 +104,9 @@ const btnListener = (() => {
         gameBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const BTN = e.target;
-                game.switchPlayers(BTN);
+                const btnID = String(BTN.getAttribute('id'));
+                game.switchPlayers(BTN, btnID);
+                log()
             })
         })
     }
@@ -104,3 +114,5 @@ const btnListener = (() => {
 })();
 
 btnListener.allBtns();
+
+log(gameBoard);
