@@ -1,21 +1,25 @@
 let log = console.log;
 
 const gameBoard = ((btnID) => {
-    // { btnid: x, btnid: o}
-    const gb = {}
+    const gb = {};
     const returnMarker = [];
     const game = [];
 
     const checkForWinner = () => {
+        log(game);
         log(gb);
-        // const keysArr = Object.keys(gb);
         const entries = Object.entries(gb);
-        entries.forEach(entry => {
-            log(entry);
-            entry.forEach(item => {
-                log(item);
-            })
-        })
+        log(entries);
+        // const xEntries = entries.filter(e => {
+        //     log(e);
+        //     return e.includes('x');
+        // })
+        // log(xEntries);
+        // entries.forEach(entry => {
+        //     entry.forEach(item => {
+        //         log(item);
+        //     })
+        // })
         //1,2,3
         //4,5,6
         //7,8,9
@@ -24,9 +28,10 @@ const gameBoard = ((btnID) => {
         //3,6,9
         //1,5,9
         //3,5,7
-        log(entries);
         // return (keysArr, Object.entries(gb));
     }
+
+    
 	return { returnMarker, checkForWinner, gb, game };
 })();
 
@@ -42,8 +47,7 @@ const player = () => {
     };
 };
 
-const gameLogic = () => {
-    
+const gameLogic = () => {   
     const user1 = player();
     const user2 = player(); 
 
@@ -85,8 +89,7 @@ const gameLogic = () => {
         }
     }
 
-    return {
-        gameBoardObject, 
+    return { 
         createX, 
         createO,
         switchPlayers
@@ -117,7 +120,7 @@ const displayController = (() => {
 
 const btnListener = (() => {
     const game = gameLogic(); //this is creating an object "game" by calling the function
-    // log(game);
+
     const allBtns = ()=> {
         const gameBtns = document.querySelectorAll('.game-btn');
         gameBtns.forEach(btn => {
@@ -125,7 +128,6 @@ const btnListener = (() => {
                 const BTN = e.target;
                 const btnID = String(BTN.getAttribute('id'));
                 game.switchPlayers(BTN, btnID);
-                log()
             })
         })
     }
