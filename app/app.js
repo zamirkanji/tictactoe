@@ -7,10 +7,27 @@ const gameBoard = ((btnID) => {
     const game = [];
 
     const checkForWinner = () => {
-        returnMarker.forEach(mark => {
+        log(gb);
+        // const keysArr = Object.keys(gb);
+        const entries = Object.entries(gb);
+        entries.forEach(entry => {
+            log(entry);
+            entry.forEach(item => {
+                log(item);
+            })
         })
+        //1,2,3
+        //4,5,6
+        //7,8,9
+        //1,4,7
+        //2,5,8
+        //3,6,9
+        //1,5,9
+        //3,5,7
+        log(entries);
+        // return (keysArr, Object.entries(gb));
     }
-	return { returnMarker, checkForWinner, game, gb };
+	return { returnMarker, checkForWinner, gb, game };
 })();
 
 
@@ -36,14 +53,16 @@ const gameLogic = () => {
         displayController.createXBtn(BTN);
         gameBoardObject.returnMarker.push(user1.xMarker());
         gameBoardObject.game.push(btnID);
-        gameBoardObject.gb[btnID] = "x"
+        gameBoardObject.gb[btnID] = "x";
+        gameBoardObject.checkForWinner();
     }
 
     const createO = (BTN, btnID) => {
         displayController.createOBtn(BTN);
         gameBoardObject.returnMarker.push(user2.oMarker());
         gameBoardObject.game.push(btnID);
-        gameBoardObject.gb[btnID] = "o"
+        gameBoardObject.gb[btnID] = "o";
+        gameBoardObject.checkForWinner();
     }
 
     const switchPlayers = (BTN, btnID) => {
