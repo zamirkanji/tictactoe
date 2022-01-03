@@ -30,16 +30,22 @@ const displayController = (() => {
 	};
 })();
 
+
+
 const gameBoard = ((btnID) => {
 	const gb = {};
 	const returnMarker = [];
 	const game = [];
 	const testArr = [];
+    const divArr = [];
 
     const loopThroughArr = () => {
         for (const el of testArr) {
             // log(el);
             if (el.hasChildNodes()) {
+                const child = el.firstChild;
+                divArr.push(el.firstChild);
+                log(divArr);
                 log('true');
             }
         }
@@ -53,7 +59,6 @@ const gameBoard = ((btnID) => {
 			// }
             testArr.push(btn);
         }
-		
 
 		log(testArr);
         return;
